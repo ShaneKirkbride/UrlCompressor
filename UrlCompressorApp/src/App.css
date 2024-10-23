@@ -1,0 +1,32 @@
+.app-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+form {
+    margin: 20px auto;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 1em;
+}
+
+button {
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.url-result {
+    margin-top: 20px;
+}
+
+    .url-result a {
+        color: blue;
+        text-decoration: underline;
+    }
