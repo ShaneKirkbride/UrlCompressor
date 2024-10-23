@@ -1,6 +1,11 @@
 import string
 
+# 
 class URLShortenerService:
+    """
+     Base62 Encoding: Efficiently converts integers to URL-friendly short codes using a combination of letters and digits.
+     Utilizes these methods to generate unique, compact short URLs that redirect to the original long URLs.
+    """
     def __init__(self):
         # Characters used for encoding (Base62)
         self.alphabet = string.ascii_letters + string.digits
@@ -9,6 +14,7 @@ class URLShortenerService:
     def encode(self, num: int) -> str:
         """
         Encodes an integer ID to a Base62 string.
+        Implements number-to-string conversion by repeatedly dividing the number by 62 and mapping remainders to characters.
         """
         s = []
         while num > 0:
@@ -20,6 +26,7 @@ class URLShortenerService:
     def decode(self, short_code: str) -> int:
         """
         Decodes a Base62 string back to an integer ID.
+        Reconstructs the original number by reversing the encoding process, multiplying by 62 and adding character indices.
         """
         num = 0
         for char in short_code:
