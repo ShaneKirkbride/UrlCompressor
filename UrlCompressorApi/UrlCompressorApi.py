@@ -36,18 +36,18 @@ def create_short_url(request: URLCreateRequest, db: Session = Depends(get_db)):
     """
     # Convert the URL to a string before storing
     original_url_str = str(request.original_url)
-    short_code = "not_set_" + str(datetime.UTC())
+    short_code = "not_set_" + str(datetime.utcnow())
 
     # Calculate the expiration time
     expires_at = (
-        datetime.UTC() + timedelta(seconds=request.expiration_time)
+        datetime.utcnow() + timedelta(seconds=request.expiration_time)
     ) if request.expiration_time else None
 
     # Create a new URL mapping instance without 'short_code'
     new_url = URLMapping(
         original_url=original_url_str,
         short_code=short_code,
-        created_at=datetime.UTC(),
+        created_at=datetime.utcnow(),
         expires_at=expires_at
     )
     
