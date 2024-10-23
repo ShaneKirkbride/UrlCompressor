@@ -299,7 +299,7 @@ With both the backend and UrlCompressorApp running, you can now test the full ap
 
     ```json
     "args": [
-      "main:app",
+      "UrlCompressorApi:app",
       "--host",
       "127.0.0.1",
       "--port",
@@ -465,31 +465,6 @@ This is the UrlCompressorApp application for a URL Compressor built with **React
 
 - **Node.js** (version 12 or higher)
 - **npm** or **yarn** package manager
-
----
-
-## Installation
-
-### 1. **Clone the Repository**
-
-```bash
-git clone https://github.com/yourusername/url-Compressor-UrlCompressorApp.git
-cd url-Compressor-UrlCompressorApp
-```
-
-### 2. **Install Dependencies**
-
-Using **npm**:
-
-```bash
-npm install
-```
-
-Or using **yarn**:
-
-```bash
-yarn install
-```
 
 ---
 
@@ -745,7 +720,7 @@ This is the UrlCompressorApi API for a URL Compressing application built with Py
 
 ## Technology Stack
 
-- **Python 3.11**
+- **Python 3.9**
 - **FastAPI** - A modern, fast (high-performance) web framework for building APIs.
 - **Uvicorn** - An ASGI web server implementation for Python.
 - **SQLAlchemy** - An SQL toolkit and Object-Relational Mapping (ORM) library.
@@ -810,7 +785,7 @@ The application uses **SQLite** as the database. The database file (`urlCompress
 ### 1. **Start the FastAPI Application**
 
 ```bash
-uvicorn main:app --reload
+uvicorn UrlCompressorApi:app --reload
 ```
 
 - Replace `main` with the name of your Python file if different.
