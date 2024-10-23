@@ -419,7 +419,7 @@ If you have any questions or encounter issues, feel free to reach out for assist
   - Input validation is performed on both the UrlCompressorApp (basic checks) and UrlCompressorApi (robust validation) to ensure URLs are valid.
   - The UrlCompressorApi avoids security vulnerabilities by properly handling user inputs and errors.
 
-# URL Compressor UrlCompressorApp
+# URL Compressor UrlCompressorApp Deep Dive
 
 This is the UrlCompressorApp application for a URL Compressor built with **React**. The application provides a user interface for entering long URLs and receiving compressed URLs from the UrlCompressorApi API.
 
@@ -632,20 +632,6 @@ Contributions are welcome! If you'd like to contribute, please follow these step
 
 ---
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## Contact
-
-- **Author**: Your Name
-- **Email**: your.email@example.com
-- **GitHub**: [yourusername](https://github.com/yourusername)
-
----
-
 ## Additional Information
 
 ### **Dependencies**
@@ -723,25 +709,7 @@ Displays the compressed URL and provides a button to copy it to the clipboard.
 
 ---
 
-## Learn More
-
-To learn more about React and related technologies, check out the following resources:
-
-- [React Documentation](https://reactjs.org/docs/getting-started.html)
-- [Create React App Documentation](https://create-react-app.dev/docs/getting-started/)
-- [Axios Documentation](https://axios-http.com/docs/intro)
-- [Material-UI Documentation](https://mui.com/getting-started/installation/)
-
----
-
-## Acknowledgements
-
-
----
-
-Feel free to customize this `README.md` file to better suit your project's specifics, such as adding more detailed instructions, screenshots, or any other relevant information.
-
-# URL Compressor UrlCompressorApi API
+# URL Compressor UrlCompressorApi API Deep Dive
 
 This is the UrlCompressorApi API for a URL Compressing application built with Python and FastAPI. The API allows users to shorten long URLs and redirect to the original URL when the compressed URL is accessed.
 
@@ -959,28 +927,6 @@ UrlCompressorApi/
 
 ---
 
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## Contact
-
-- **Author**: Shane Kirkbrde
-- **Email**: shane.kirkbride@keysight.com
-- **GitHub**: [ShaneKirkbride](https://github.com/ShaneKirkbride)
-
----
-
-## Additional Information
-
 ### **Dependencies**
 
 - **FastAPI**: Web framework for building APIs.
@@ -989,14 +935,6 @@ This project is licensed under the [MIT License](LICENSE).
 - **Pydantic**: Data validation library.
 - **aiofiles**: For asynchronous file operations.
 - **databases**: Async database support (if used).
-
-### **Creating `requirements.txt`**
-
-If you need to create the `requirements.txt` file, you can generate it using:
-
-```bash
-pip freeze > requirements.txt
-```
 
 ---
 
@@ -1028,6 +966,26 @@ pip freeze > requirements.txt
 - **Analytics**: Track the number of clicks for each compressed URL.
 - **Custom Aliases**: Allow users to specify custom short codes.
 - **API Rate Limiting**: Prevent abuse by limiting the number of requests per user/IP.
+
+## Additional Information
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Contact
+
+- **Author**: Shane Kirkbrde
+- **Email**: shane.kirkbride@keysight.com
+- **GitHub**: [ShaneKirkbride](https://github.com/ShaneKirkbride)
 
 ---
 
