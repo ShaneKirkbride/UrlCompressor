@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "UrlCompressorApi", "UrlCompressorApi\UrlCompressorApi.pyproj", "{5787F33E-5051-49DB-82DB-D20C5C7177B3}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "urlcompressorapp", "UrlCompressorApp\urlcompressorapp.esproj", "{79758BE7-0561-4753-9DF3-70E51CC5541D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5787F33E-5051-49DB-82DB-D20C5C7177B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5787F33E-5051-49DB-82DB-D20C5C7177B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79758BE7-0561-4753-9DF3-70E51CC5541D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79758BE7-0561-4753-9DF3-70E51CC5541D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79758BE7-0561-4753-9DF3-70E51CC5541D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{79758BE7-0561-4753-9DF3-70E51CC5541D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79758BE7-0561-4753-9DF3-70E51CC5541D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79758BE7-0561-4753-9DF3-70E51CC5541D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

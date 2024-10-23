@@ -1,0 +1,28 @@
+.url-result {
+    margin-top: 20px;
+}
+
+.short-url-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .short-url-container a {
+        color: #0066cc;
+        text-decoration: none;
+        font-size: 1.2em;
+        margin-right: 10px;
+    }
+
+    .short-url-container button {
+        padding: 6px 12px;
+        background-color: #008CBA;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+        .short-url-container button:hover {
+            background-color: #007bb5;
+        }
