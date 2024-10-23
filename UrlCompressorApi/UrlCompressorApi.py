@@ -18,7 +18,7 @@ url_service = URLShortenerService()  # Instantiate the URLShortenerService
 # Configure CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Specify your frontend origin
+    allow_origins=["http://localhost:3000", "http://10.0.0.185:3000"],  # Specify your frontend origin
     allow_credentials=True,
     allow_methods=["POST", "OPTIONS"],  # Explicitly include POST and OPTIONS methods
     allow_headers=["*"],
@@ -29,8 +29,39 @@ app.add_middleware(
 def options_short_url():
     return Response(status_code=200)
 
-@ app.post("/shorten", response_model=URLCreateResponse)
-def create_short_url(request: URLCreateRequest, db: Session = Depends(get_db)):
+from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi.responses import RedirectResponse
+from sqlalchemy.orm import Session
+from datetime import datetime, timedelta
+from models import Base, URLMapping
+from database import engine, get_db
+from services import URLShortenerService
+from schemas import URLCreateRequest, URLCreateResponse
+from fastapi.middleware.cors import CORSMiddleware
+
+# Create all tables in the database (if they don't exist)
+Base.metadata.create_all(bind=engine)
+
+# Initialize the FastAPI app
+app = FastAPI()
+url_service = URLShortenerService()  # Instantiate the URLShortenerService
+
+# Configure CORS middleware to allow frontend requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://10.0.0.185:3000"], #add IP address of your choice here.
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.post("/shorten", response_model=URLCreateResponse)
+def create_short_url(
+    request: URLCreateRequest,
+    request_obj: Request,
+    db: Session = Depends(get_db)
+):
     """
     Endpoint to create a new short URL.
     """
@@ -64,10 +95,9 @@ def create_short_url(request: URLCreateRequest, db: Session = Depends(get_db)):
     # Now commit the transaction
     db.commit()
     db.refresh(new_url)  # Refresh to get the latest data from the database
-    db.flush()  # Flush the session to get new_url.id assigned by the database
     
-    # Construct the full short URL to return
-    short_url = f"http://localhost:8000/{short_code}"
+    # Construct the full short URL to return using request_obj
+    short_url = f"{request_obj.base_url}{short_code}"
     return {"short_url": short_url}  # Return the short URL to the client
 
 @app.get("/{short_code}")
