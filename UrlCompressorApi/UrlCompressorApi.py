@@ -46,11 +46,11 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 url_service = URLShortenerService()  # Instantiate the URLShortenerService
 
-# Configure CORS middleware to allow frontend requests
+# Configure CORS middleware to allow all origins without credentials
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://10.0.0.185:3000"], #add IP address of your choice here.
-    allow_credentials=True,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
