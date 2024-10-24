@@ -1,5 +1,7 @@
 ﻿# URL Compressor Application
-
+`
+https://github.com/user-attachments/assets/77b6ba55-ed5f-47a1-859f-fa6752f08761
+`
 This project consists of both a **UrlCompressorApp** and a **UrlCompressorApi** that work together to provide a full-featured URL shortening service. The **UrlCompressorApi** is built with **Python** and **FastAPI**, while the **UrlCompressorApp** is built with **React**.
 
 ## Overview
