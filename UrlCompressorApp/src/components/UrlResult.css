@@ -1,28 +1,50 @@
+/* src/components/UrlResult.css */
+
 .url-result {
-    margin-top: 20px;
+    margin-top: 30px;
+    text-align: center;
 }
 
 .short-url-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-    .short-url-container a {
-        color: #0066cc;
-        text-decoration: none;
-        font-size: 1.2em;
-        margin-right: 10px;
-    }
+.short-url-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
 
-    .short-url-container button {
-        padding: 6px 12px;
-        background-color: #008CBA;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
+.copy-button {
+    background: linear-gradient(45deg, #36d1dc, #5b86e5);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-        .short-url-container button:hover {
-            background-color: #007bb5;
-        }
+.copy-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(91, 134, 229, 0.6);
+}
+
+.copy-button:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 600px) {
+    .short-url-input {
+        width: 90%;
+    }
+}

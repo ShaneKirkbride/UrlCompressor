@@ -24,38 +24,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Add explicit OPTIONS route for '/shorten' to handle preflight requests
-@app.options("/shorten")
-def options_short_url():
-    return Response(status_code=200)
-
-from fastapi import FastAPI, Depends, HTTPException, Request
-from fastapi.responses import RedirectResponse
-from sqlalchemy.orm import Session
-from datetime import datetime, timedelta
-from models import Base, URLMapping
-from database import engine, get_db
-from services import URLShortenerService
-from schemas import URLCreateRequest, URLCreateResponse
-from fastapi.middleware.cors import CORSMiddleware
-
-# Create all tables in the database (if they don't exist)
-Base.metadata.create_all(bind=engine)
-
-# Initialize the FastAPI app
-app = FastAPI()
-url_service = URLShortenerService()  # Instantiate the URLShortenerService
-
-# Configure CORS middleware to allow all origins without credentials
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
 @app.post("/shorten", response_model=URLCreateResponse)
 def create_short_url(
     request: URLCreateRequest,

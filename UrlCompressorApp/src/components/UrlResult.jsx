@@ -1,5 +1,8 @@
+// src/components/UrlResult.js
+
 import React from 'react';
-import './UrlResult.css'; // Optional: Separate CSS file for styling
+import './UrlResult.css';
+
 function URLResult({ shortURL }) {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(shortURL);
@@ -10,10 +13,10 @@ function URLResult({ shortURL }) {
         <div className="url-result">
             <p>Your shortened URL:</p>
             <div className="short-url-container">
-                <a href={shortURL} target="_blank" rel="noopener noreferrer">
-                    {shortURL}
-                </a>
-                <button onClick={copyToClipboard}>Copy</button>
+                <input type="text" value={shortURL} readOnly className="short-url-input" />
+                <button onClick={copyToClipboard} className="copy-button">
+                    Copy
+                </button>
             </div>
         </div>
     );

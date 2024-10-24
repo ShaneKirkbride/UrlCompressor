@@ -1,3 +1,5 @@
+// src/App.js
+
 import React, { Component } from 'react';
 import './App.css';
 import ShortenURLForm from './components/ShortenUrlForm';
@@ -26,7 +28,7 @@ class App extends Component {
         return (
             <Router basename={process.env.PUBLIC_URL}>
                 <div className="app-container">
-                    <h1>URL Shortener</h1>
+                    <h1>URL Compressor</h1>
                     <ShortenURLForm setShortURL={this.setShortURL} />
                     {shortURL && <URLResult shortURL={shortURL} />}
                 </div>

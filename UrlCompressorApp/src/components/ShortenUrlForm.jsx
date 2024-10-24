@@ -1,3 +1,5 @@
+// src/components/ShortenUrlForm.js
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import './ShortenUrlForm.css';
@@ -38,7 +40,9 @@ function ShortenURLForm({ setShortURL }) {
                 value={expirationTime}
                 onChange={(e) => setExpirationTime(e.target.value)}
             />
-            <button type="submit">Shorten URL</button>
+            <button type="submit" className="cool-button">
+                Shorten URL
+            </button>
         </form>
     );
 }
