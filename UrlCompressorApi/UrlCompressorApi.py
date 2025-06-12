@@ -1,5 +1,7 @@
+"""FastAPI service exposing URL shortening endpoints."""
+
 from fastapi import FastAPI, Depends, HTTPException, Request
-from fastapi.responses import RedirectResponse, Response
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from models import Base, URLMapping
@@ -13,66 +15,71 @@ Base.metadata.create_all(bind=engine)
 
 # Initialize the FastAPI app
 app = FastAPI()
-url_service = URLShortenerService()  # Instantiate the URLShortenerService
+# Service responsible for Base62 encoding/decoding of IDs
+url_service = URLShortenerService()
 
 # Configure CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://10.0.0.185:3000"],  # Specify your frontend origin
+    allow_origins=[
+        "http://localhost:3000",
+        "http://10.0.0.185:3000",
+    ],  # Specify your frontend origin
     allow_credentials=True,
     allow_methods=["POST", "OPTIONS"],  # Explicitly include POST and OPTIONS methods
     allow_headers=["*"],
 )
 
+
 @app.post("/shorten", response_model=URLCreateResponse)
 def create_short_url(
-    request: URLCreateRequest,
-    request_obj: Request,
-    db: Session = Depends(get_db)
+    request: URLCreateRequest, request_obj: Request, db: Session = Depends(get_db)
 ):
-    """
-    Endpoint to create a new short URL.
-    """
+    """Create a new short URL and return the generated link."""
     # Convert the URL to a string before storing
     original_url_str = str(request.original_url)
-    short_code = "not_set_" + str(datetime.utcnow())
+    # Temporary code used so the record can be flushed and an ID generated
+    temp_code = f"tmp_{datetime.utcnow().timestamp()}"
 
     # Calculate the expiration time
     expires_at = (
-        datetime.utcnow() + timedelta(seconds=request.expiration_time)
-    ) if request.expiration_time else None
+        (datetime.utcnow() + timedelta(seconds=request.expiration_time))
+        if request.expiration_time
+        else None
+    )
 
     # Create a new URL mapping instance without 'short_code'
     new_url = URLMapping(
         original_url=original_url_str,
-        short_code=short_code,
+        short_code=temp_code,
         created_at=datetime.utcnow(),
-        expires_at=expires_at
+        expires_at=expires_at,
     )
-    
+
     db.add(new_url)
-    db.commit()  # Commit to get new_url.id assigned
-    
+    db.flush()  # Flush so new_url.id is populated without a full commit
+
     if new_url.id is None:
-        raise HTTPException(status_code=500, detail="Failed to generate short URL. Please try again.")
+        raise HTTPException(
+            status_code=500, detail="Failed to generate short URL. Please try again."
+        )
 
     # Generate the short code using the new URL's ID
     short_code = url_service.encode(new_url.id)
     new_url.short_code = short_code  # Update the URL mapping with the short code
-    
+
     # Now commit the transaction
     db.commit()
     db.refresh(new_url)  # Refresh to get the latest data from the database
-    
+
     # Construct the full short URL to return using request_obj
     short_url = f"{request_obj.base_url}{short_code}"
     return {"short_url": short_url}  # Return the short URL to the client
 
+
 @app.get("/{short_code}")
 def redirect_to_original(short_code: str, db: Session = Depends(get_db)):
-    """
-    Endpoint to redirect to the original URL when accessing the short URL.
-    """
+    """Lookup the short code and redirect the client to the original URL."""
     try:
         # Decode the short code to get the original ID
         entry_id = url_service.decode(short_code)
