@@ -2,6 +2,10 @@
 
 import string
 
+import base64
+from io import BytesIO
+import png
+import qrcodegen
 
 class URLShortenerService:
     """
@@ -38,3 +42,22 @@ class URLShortenerService:
             # ValueError will be raised if an invalid character is supplied
             num = num * self.base + self.alphabet.index(char)
         return num
+
+class QRCodeService:
+    """Generate base64-encoded QR codes using only MIT-licensed libraries."""
+
+    def __init__(self, border: int = 4):
+        self.border = border
+
+    def generate_qr_base64(self, data: str) -> str:
+        qr = qrcodegen.QrCode.encode_text(data, qrcodegen.QrCode.Ecc.MEDIUM)
+        size = qr.get_size()
+        size_with_border = size + 2 * self.border
+        matrix = [[0] * size_with_border for _ in range(size_with_border)]
+        for y in range(size):
+            for x in range(size):
+                if qr.get_module(x, y):
+                    matrix[y + self.border][x + self.border] = 1
+        with BytesIO() as output:
+            png.Writer(size_with_border, size_with_border, bitdepth=1).write(output, matrix)
+            return base64.b64encode(output.getvalue()).decode("ascii")

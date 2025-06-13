@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from models import Base, URLMapping
 from database import engine, get_db
-from services import URLShortenerService
+from services import URLShortenerService, QRCodeService
 from schemas import URLCreateRequest, URLCreateResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,6 +18,7 @@ app = FastAPI()
 # Service responsible for Base62 encoding/decoding of IDs
 url_service = URLShortenerService()
 
+qr_service = QRCodeService()
 # Configure CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
@@ -74,8 +75,8 @@ def create_short_url(
 
     # Construct the full short URL to return using request_obj
     short_url = f"{request_obj.base_url}{short_code}"
-    return {"short_url": short_url}  # Return the short URL to the client
-
+    qr_code = qr_service.generate_qr_base64(short_url)
+    return {"short_url": short_url, "qr_code": qr_code}
 
 @app.get("/{short_code}")
 def redirect_to_original(short_code: str, db: Session = Depends(get_db)):

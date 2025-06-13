@@ -666,6 +666,7 @@ You can customize the styles by modifying the CSS files or using a CSS-in-JS sol
 
 - The compressed URL is displayed below the form.
 - Click the **"Copy"** button to copy it to your clipboard.
+- A QR code for the short URL is also displayed for quick scanning.
 - Use the compressed URL in your browser or share it with others.
 
 ---

@@ -11,18 +11,19 @@ class App extends Component {
         super(props);
         this.state = {
             shortURL: '',
+            qrCode: ''
         };
 
         // Bind the method to access 'this'
         this.setShortURL = this.setShortURL.bind(this);
     }
 
-    setShortURL(newURL) {
-        this.setState({ shortURL: newURL });
+    setShortURL(newURL, qrCode) {
+        this.setState({ shortURL: newURL, qrCode });
     }
 
     render() {
-        const { shortURL } = this.state;
+        const { shortURL, qrCode } = this.state;
         console.log("Host URL: " + process.env.PUBLIC_URL);
 
         return (
@@ -30,7 +31,7 @@ class App extends Component {
                 <div className="app-container">
                     <h1>URL Compressor</h1>
                     <ShortenURLForm setShortURL={this.setShortURL} />
-                    {shortURL && <URLResult shortURL={shortURL} />}
+                    {shortURL && <URLResult shortURL={shortURL} qrCode={qrCode} />}
                 </div>
             </Router>
         );

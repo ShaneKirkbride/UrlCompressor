@@ -16,7 +16,7 @@ function ShortenURLForm({ setShortURL }) {
                 original_url: originalURL,
                 expiration_time: expirationTime ? parseInt(expirationTime, 10) : null,
             });
-            setShortURL(response.data.short_url);
+            setShortURL(response.data.short_url, response.data.qr_code);
             setOriginalURL('');
             setExpirationTime('');
         } catch (error) {

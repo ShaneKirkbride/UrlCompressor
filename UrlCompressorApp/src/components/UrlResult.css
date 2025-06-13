@@ -48,3 +48,4 @@
         width: 90%;
     }
 }
+.qr-code-image {\n    margin-top: 20px;\n    width: 150px;\n    height: 150px;\n}
