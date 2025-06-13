@@ -7,3 +7,4 @@ class URLCreateRequest(BaseModel):
 
 class URLCreateResponse(BaseModel):
     short_url: str  # The generated short URL to return to the client
+    qr_code: str  # Base64-encoded PNG QR code

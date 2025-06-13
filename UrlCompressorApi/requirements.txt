@@ -5,3 +5,6 @@ pydantic
 aiofiles
 jinja2
 httpx
+
+qrcodegen
+pypng

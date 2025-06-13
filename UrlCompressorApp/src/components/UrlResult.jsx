@@ -3,7 +3,7 @@
 import React from 'react';
 import './UrlResult.css';
 
-function URLResult({ shortURL }) {
+function URLResult({ shortURL, qrCode }) {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(shortURL);
         alert('Short URL copied to clipboard!');
@@ -18,6 +18,7 @@ function URLResult({ shortURL }) {
                     Copy
                 </button>
             </div>
+            <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" className="qr-code-image" />
         </div>
     );
 }
