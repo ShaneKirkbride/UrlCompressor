@@ -10,3 +10,4 @@ qrcodegen
 pypng
 rake-nltk
 beautifulsoup4
+pytest
