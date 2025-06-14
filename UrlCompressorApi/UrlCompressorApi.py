@@ -6,8 +6,13 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from models import Base, URLMapping
 from database import engine, get_db
-from services import URLShortenerService, QRCodeService
-from schemas import URLCreateRequest, URLCreateResponse
+from services import URLShortenerService, QRCodeService, SlugGeneratorService
+from schemas import (
+    URLCreateRequest,
+    URLCreateResponse,
+    SlugRequest,
+    SlugResponse,
+)
 from fastapi.middleware.cors import CORSMiddleware
 
 # Create all tables in the database (if they don't exist)
@@ -19,6 +24,7 @@ app = FastAPI()
 url_service = URLShortenerService()
 
 qr_service = QRCodeService()
+slug_service = SlugGeneratorService()
 # Configure CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
@@ -77,6 +83,18 @@ def create_short_url(
     short_url = f"{request_obj.base_url}{short_code}"
     qr_code = qr_service.generate_qr_base64(short_url)
     return {"short_url": short_url, "qr_code": qr_code}
+
+
+@app.post("/slugify", response_model=SlugResponse)
+def generate_slug(request: SlugRequest):
+    """Generate an SEO-friendly slug from the target URL."""
+    try:
+        slug = slug_service.generate_slug(str(request.url))
+    except Exception as exc:  # Catch httpx and parsing errors
+        raise HTTPException(status_code=400, detail=str(exc))
+    if not slug:
+        raise HTTPException(status_code=500, detail="Unable to generate slug")
+    return {"slug": slug}
 
 @app.get("/{short_code}")
 def redirect_to_original(short_code: str, db: Session = Depends(get_db)):
