@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .addmargin {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -7,5 +12,4 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-
 }

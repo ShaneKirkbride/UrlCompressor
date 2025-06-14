@@ -14,12 +14,14 @@
     max-width: 850px;
     padding: 12px;
     font-size: 16px;
-    border: 2px solid #ddd;
+    border: 1px solid #333;
     border-radius: 5px;
+    background-color: #1e1e1e;
+    color: var(--text-color);
 }
 
 .cool-button {
-    background: linear-gradient(45deg, #8B0000, #800080);
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
     color: white;
     border: none;
     padding: 15px 30px;
@@ -32,7 +34,7 @@
 
 .cool-button:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(128, 0, 128, 0.6);
+    box-shadow: 0 4px 15px rgba(30, 136, 229, 0.6);
 }
 
 .cool-button:active {

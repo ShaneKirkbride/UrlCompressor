@@ -18,12 +18,14 @@
     max-width: 400px;
     padding: 12px;
     font-size: 16px;
-    border: 2px solid #ddd;
+    border: 1px solid #333;
     border-radius: 5px;
+    background-color: #1e1e1e;
+    color: var(--text-color);
 }
 
 .copy-button {
-    background: linear-gradient(45deg, #36d1dc, #5b86e5);
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
     color: white;
     border: none;
     padding: 12px 20px;
@@ -36,7 +38,7 @@
 
 .copy-button:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(91, 134, 229, 0.6);
+    box-shadow: 0 4px 15px rgba(30, 136, 229, 0.6);
 }
 
 .copy-button:active {
@@ -48,4 +50,9 @@
         width: 90%;
     }
 }
-.qr-code-image {\n    margin-top: 20px;\n    width: 150px;\n    height: 150px;\n}
+
+.qr-code-image {
+    margin-top: 20px;
+    width: 150px;
+    height: 150px;
+}
