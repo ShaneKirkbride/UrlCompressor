@@ -450,6 +450,7 @@ This is the UrlCompressorApp application for a URL Compressor built with **React
 - **Copy to Clipboard**: Users can copy the compressed URL with a single click.
 - **Responsive Design**: The UI is responsive and works on various screen sizes.
 - **Error Handling**: Displays error messages for invalid inputs or server errors.
+- **AI Slug Generation**: Creates SEO-friendly slugs using keyword extraction from the target page.
 
 ---
 
@@ -718,6 +719,7 @@ This is the UrlCompressorApi API for a URL Compressing application built with Py
 - Automatic redirection to the original URL when the short URL is accessed.
 - Efficient Base62 encoding for generating short codes.
 - SQLite database for storing URL mappings.
+- AI-powered slug generation from webpage content.
 
 ---
 
@@ -859,6 +861,28 @@ http://localhost:8000
 - **Errors**:
   - **Status Code**: `404 Not Found` - If the short code is invalid or does not exist.
   - **Status Code**: `410 Gone` - If the short URL has expired.
+
+### 3. **Generate Slug**
+
+- **Endpoint**: `/slugify`
+- **Method**: `POST`
+- **Description**: Extracts keywords from the target URL and returns a slug.
+
+#### **Request Body**
+
+```json
+{
+  "url": "https://www.example.com/article"
+}
+```
+
+#### **Response**
+
+```json
+{
+  "slug": "example-article"
+}
+```
 
 ---
 

@@ -1,6 +1,12 @@
 """Utility service implementing Base62 encode/decode."""
 
 import string
+import re
+from typing import List
+
+import httpx
+from bs4 import BeautifulSoup
+from rake_nltk import Rake
 
 import base64
 from io import BytesIO
@@ -61,3 +67,63 @@ class QRCodeService:
         with BytesIO() as output:
             png.Writer(size_with_border, size_with_border, bitdepth=1).write(output, matrix)
             return base64.b64encode(output.getvalue()).decode("ascii")
+
+
+class SlugGeneratorService:
+    """Generate slugs using keyword extraction."""
+
+    DEFAULT_STOPWORDS: List[str] = [
+        "a",
+        "an",
+        "the",
+        "and",
+        "or",
+        "is",
+        "in",
+        "to",
+        "of",
+        "for",
+        "on",
+        "with",
+        "at",
+        "by",
+        "this",
+        "that",
+        "from",
+        "as",
+        "are",
+    ]
+
+    def __init__(self, max_words: int = 3):
+        self.max_words = max_words
+        self.rake = Rake(stopwords=self.DEFAULT_STOPWORDS)
+
+    def generate_slug(self, url: str) -> str:
+        response = httpx.get(url, timeout=10)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        text = ""
+        if soup.title and soup.title.string:
+            text += soup.title.string + " "
+        text += soup.get_text(separator=" ")
+        self.rake.extract_keywords_from_text(text)
+        keywords = self.rake.get_ranked_phrases()
+        words: List[str] = []
+        for kw in keywords:
+            for part in re.split(r"[^a-zA-Z0-9]+", kw):
+                part = part.lower()
+                if part:
+                    words.append(part)
+                if len(words) >= self.max_words:
+                    break
+            if len(words) >= self.max_words:
+                break
+        if not words and soup.title and soup.title.string:
+            for part in re.split(r"[^a-zA-Z0-9]+", soup.title.string):
+                if part:
+                    words.append(part.lower())
+                if len(words) >= self.max_words:
+                    break
+        slug = "-".join(words)
+        slug = re.sub(r"-+", "-", slug).strip("-")
+        return slug
