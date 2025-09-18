@@ -25,6 +25,13 @@ def test_encode_decode_roundtrip():
         code = service.encode(n)
         assert service.decode(code) == n
 
+
+def test_encode_decode_zero():
+    service = URLShortenerService()
+    code = service.encode(0)
+    assert code == service.alphabet[0]
+    assert service.decode(code) == 0
+
 def test_generate_qr_base64():
     qr_service = QRCodeService()
     data = 'https://example.com'

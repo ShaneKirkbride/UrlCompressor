@@ -21,6 +21,8 @@ class URLShortenerService:
 
     def __init__(self):
         # Characters used for encoding (Base62)
+        # Default alphabet for Base62: letters followed by digits.
+        # The first character represents zero to ensure proper round trips.
         self.alphabet = string.ascii_letters + string.digits
         self.base = len(self.alphabet)  # Base62
 
@@ -29,6 +31,8 @@ class URLShortenerService:
         Encodes an integer ID to a Base62 string.
         Implements number-to-string conversion by repeatedly dividing the number by 62 and mapping remainders to characters.
         """
+        if num == 0:
+            return self.alphabet[0]
         s = []
         while num > 0:
             s.append(
@@ -36,7 +40,7 @@ class URLShortenerService:
             )  # Get the character for the remainder
             num //= self.base  # Reduce the number for next iteration
         # Reverse the list to get the correct order
-        return "".join(reversed(s)) or "0"  # Return '0' if num is 0
+        return "".join(reversed(s))
 
     def decode(self, short_code: str) -> int:
         """
